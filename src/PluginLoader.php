@@ -2,6 +2,8 @@
 
 namespace Skintrphoenix\PluginLoader;
 
+use Skintrphoenix\PluginLoader\Plugin\PluginBase;
+
 class PluginLoader{
 
     private $base_folder;
@@ -14,23 +16,41 @@ class PluginLoader{
     }
 
     public function getAllPlugins():array{
-        $plugin = [];
+        $plugins = [];
 
         $data = scandir($this->base_folder);
         foreach($data as $item){
-            $path = $this->base_folder . $item;
-            if($this->canloadplugin($path)){
-                $json = json_decode(file_get_contents($path . '/plugin.yml'));
-                if(isset($json->name)){
-                    $plugin[] = $json->name;
+            try {
+                $path = $this->base_folder . $item;
+                //code...
+                if($this->canloadplugin($path)){
+                    $plugin = json_decode(file_get_contents($path . '/plugin.yml'));
+                    $class = $this->validateClass($path, $plugin->main);
+                    if(!is_null($class)){
+                        $plugin[$plugin->name] = $class;
+                    }
                 }
+            } catch (\Throwable $th) {
+                //throw $th;
+                var_dump($th->getMessage());
             }
         }
-        return $plugin;
+        return $plugins;
     }
 
     public function canloadplugin(string $path){
         return is_dir($path) and file_exists($path . "/plugin.yml") and file_exists($path . "/src/");
+    }
+
+    public function validateClass(string $path,string $main):?PluginBase{
+        $class_file = $path . 'src/' . $main;
+        if(class_exists($main)){
+            $class = new $class_file();
+            if(is_subclass_of($class, PluginBase::class)){
+                return $class;
+            }
+        }
+        return null;
     }
 
 }
