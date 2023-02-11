@@ -23,7 +23,6 @@ class PluginLoader{
             try {
                 $path = $this->base_folder . $item;
                 //code...
-                echo $this->canloadplugin($path);
                 if($this->canloadplugin($path)){
                     $plugin = json_decode(file_get_contents($path . '/plugin.yml'));
                     $class = $this->validateClass($path, $plugin->main);
