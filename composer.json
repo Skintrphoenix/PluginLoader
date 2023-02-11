@@ -1,7 +1,7 @@
 {
     "name": "skintrphoenix/plugin-loader",
     "description": "Plugin Loader for Laravel",
-    "license": "MIT License",
+    "license": "GPL-3.0-only",
     "autoload": {
         "psr-4": {
             "Skintrphoenix\\PluginLoader\\": "src/"
