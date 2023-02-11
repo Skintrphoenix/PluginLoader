@@ -18,16 +18,19 @@ class PluginLoader{
 
         $data = scandir($this->base_folder);
         foreach($data as $item){
-            $file = $this->base_folder . $item . '/plugin.json';
-            if(is_file($file)){
-                $json = json_decode(file_get_contents($file));
+            $path = $this->base_folder . $item;
+            if($this->canloadplugin($path)){
+                $json = json_decode(file_get_contents($path . '/plugin.yml'));
                 if(isset($json->name)){
                     $plugin[] = $json->name;
                 }
             }
         }
-
         return $plugin;
+    }
+
+    public function canloadplugin(string $path){
+        return is_dir($path) and file_exists($path . "/plugin.yml") and file_exists($path . "/src/");
     }
 
 }
