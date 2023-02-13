@@ -28,7 +28,7 @@ class PluginLoader implements PluginIds{
                     $plugin = json_decode(file_get_contents($path . '/' . self::PLUGIN));
                     $class = $this->validateClass($path, $plugin->main);
                     if(!is_null($class)){
-                        $plugin[$plugin->name] = $class;
+                        $plugins[$plugin->name] = $class;
                     }
                 }
             } catch (\Throwable $th) {
@@ -44,8 +44,7 @@ class PluginLoader implements PluginIds{
     }
 
     public function validateClass(string $path,string $main):?PluginBase{
-        $class_file = $path . '/src/' . $main;
-        $class_file = str_replace("\\", '/', $main);
+        $class_file = $main;
         if(class_exists($main)){
             $class = new $class_file();
             if($class instanceof PluginBase){
