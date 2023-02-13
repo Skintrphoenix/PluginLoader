@@ -9,7 +9,7 @@ composer require skintrphoenix/plugin-loader
 
 ### Configuration (Optional)
 
-Add This code to \App\Providers\AppServiceProviders on method boot
+Add This code to \App\Providers\AppServiceProvider on method boot
 ```bash
 $plugin = new \Skintrphoenix\PluginLoader\PluginLoader();
 ```
