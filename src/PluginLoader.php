@@ -44,10 +44,11 @@ class PluginLoader implements PluginIds{
     }
 
     public function validateClass(string $path,string $main):?PluginBase{
-        $class_file = $path . 'src/' . $main;
+        $class_file = $path . '/src/' . $main;
+        $class_file = str_replace("\\", '/', $main);
         if(class_exists($main)){
             $class = new $class_file();
-            if(is_subclass_of($class, PluginBase::class)){
+            if($class instanceof PluginBase){
                 return $class;
             }
         }
