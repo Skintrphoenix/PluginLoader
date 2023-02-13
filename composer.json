@@ -5,10 +5,7 @@
     "autoload": {
         "psr-4": {
             "Skintrphoenix\\PluginLoader\\": "src/"
-        },
-        "files":[
-            "src/Autoload.php"
-        ]
+        }
     },
     "authors": [
         {
