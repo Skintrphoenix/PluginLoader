@@ -4,7 +4,7 @@ namespace Skintrphoenix\PluginLoader;
 
 use Skintrphoenix\PluginLoader\Plugin\PluginBase;
 
-class PluginLoader{
+class PluginLoader implements PluginIds{
 
     private $base_folder;
 
@@ -25,7 +25,7 @@ class PluginLoader{
                 $path = $this->base_folder . $item;
                 //code...
                 if($this->canloadplugin($path)){
-                    $plugin = json_decode(file_get_contents($path . '/plugin.yml'));
+                    $plugin = json_decode(file_get_contents($path . '/' . self::PLUGIN));
                     $class = $this->validateClass($path, $plugin->main);
                     if(!is_null($class)){
                         $plugin[$plugin->name] = $class;
@@ -40,7 +40,7 @@ class PluginLoader{
     }
 
     public function canloadplugin(string $path){
-        return is_dir($path) and file_exists($path . "/plugin.json") and file_exists($path . "/src/");
+        return is_dir($path) and file_exists($path . "/" . self::PLUGIN) and file_exists($path . "/src/");
     }
 
     public function validateClass(string $path,string $main):?PluginBase{
