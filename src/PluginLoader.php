@@ -15,6 +15,7 @@ class PluginLoader implements PluginIds{
         if(!is_dir($this->base_folder)){
             @mkdir($this->base_folder);
         }
+        $this->loadPlugins();
     }
 
     public function loadPlugin($path):void{
