@@ -13,7 +13,7 @@ class PluginLoader implements PluginIds{
     private $plugins = [];
 
     public function __construct(){
-        $this->base_folder = base_path('plugins') . '/';
+        $this->base_folder = base_path(self::FOLDER) . '/';
         if(!is_dir($this->base_folder)){
             @mkdir($this->base_folder);
         }

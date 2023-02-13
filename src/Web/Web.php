@@ -4,8 +4,9 @@ namespace Skintrphoenix\PluginLoader\Web;
 
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
+use Skintrphoenix\PluginLoader\PluginIds;
 
-class Web{
+class Web implements PluginIds{
 
     public function __construct()
     {
@@ -14,13 +15,23 @@ class Web{
     }
 
     public function route(){
-        Route::resource('plugins', PluginController::class);
+        Route::resource(self::FOLDER, PluginController::class);
     }
 
     public function symlink(){
-        $link = base_path('resources/views/plugins');
+        $link = base_path('resources/views/' . self::FOLDER);
         if(!is_link($link)){
-            symlink(__DIR__ . '/../resource/page', $link);
+            symlink(__DIR__ . '/../resource/views', $link);
+        }
+
+
+        $link = base_path('public/resources/');
+        if(!is_dir($link)){
+            mkdir($link);
+        }
+        $link .= self::FOLDER;
+        if(!is_link($link)){
+            symlink(__DIR__ . '/../resource/public', $link);
         }
     }
 }
