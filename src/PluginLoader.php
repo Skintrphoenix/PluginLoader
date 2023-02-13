@@ -8,6 +8,8 @@ class PluginLoader implements PluginIds{
 
     private $base_folder;
 
+    private $plugins = [];
+
     public function __construct(){
         $this->base_folder = base_path('plugins') . '/';
         if(!is_dir($this->base_folder)){
@@ -15,28 +17,32 @@ class PluginLoader implements PluginIds{
         }
     }
 
-    public function getAllPlugins():array{
-        $plugins = [];
+    public function loadPlugin($path):void{
+        if($this->canloadplugin($path)){
+            $plugin = json_decode(file_get_contents($path . '/' . self::PLUGIN));
+            $class = $this->validateClass($path, $plugin->main);
+            if(!is_null($class)){
+                $this->plugins[$plugin->name] = $class;
+            }
+        }
+    }
 
+    public function loadPlugins():void{
         $data = scandir($this->base_folder);
         for($i = 2; $i < count($data); $i++){
             $item = $data[$i];
             try {
                 $path = $this->base_folder . $item;
-                //code...
-                if($this->canloadplugin($path)){
-                    $plugin = json_decode(file_get_contents($path . '/' . self::PLUGIN));
-                    $class = $this->validateClass($path, $plugin->main);
-                    if(!is_null($class)){
-                        $plugins[$plugin->name] = $class;
-                    }
-                }
+                $this->loadPlugin($path);
             } catch (\Throwable $th) {
                 //throw $th;
                 var_dump($th->getMessage());
             }
         }
-        return $plugins;
+    }
+
+    public function getAllPlugins():array{
+        return $this->plugins;
     }
 
     public function canloadplugin(string $path){
@@ -44,12 +50,14 @@ class PluginLoader implements PluginIds{
     }
 
     public function validateClass(string $path,string $main):?PluginBase{
-        $class_file = $main;
-        if(class_exists($main)){
-            $class = new $class_file();
-            if($class instanceof PluginBase){
-                return $class;
-            }
+        $class_file = $path . "/src/" . $main;
+        $class_file = str_replace('\\', '/', $class_file);
+        spl_autoload_register(function($class_name) use($class_file){
+            include $class_file . '.php';
+        });
+        $class = new $main();
+        if($class instanceof PluginBase){
+            return $class;
         }
         return null;
     }
