@@ -2,6 +2,7 @@
 
 namespace Skintrphoenix\PluginLoader;
 
+use Illuminate\Support\Facades\Log;
 use Skintrphoenix\PluginLoader\Plugin\PluginBase;
 
 class PluginLoader implements PluginIds{
@@ -37,7 +38,7 @@ class PluginLoader implements PluginIds{
                 $this->loadPlugin($path);
             } catch (\Throwable $th) {
                 //throw $th;
-                var_dump($th->getMessage());
+                Log::error($th->getMessage());
             }
         }
     }
@@ -53,8 +54,10 @@ class PluginLoader implements PluginIds{
     public function validateClass(string $path,string $main):?PluginBase{
         $class_file = $path . "/src/" . $main;
         $class_file = str_replace('\\', '/', $class_file);
-        spl_autoload_register(function($class_name) use($class_file){
-            include $class_file . '.php';
+        spl_autoload_register(function($class_name) use($class_file, $main){
+            if(!class_exists($main)){
+                include $class_file . '.php';
+            }
         });
         $class = new $main();
         if($class instanceof PluginBase){
