@@ -4,6 +4,7 @@ namespace Skintrphoenix\PluginLoader;
 
 use Illuminate\Support\Facades\Log;
 use Skintrphoenix\PluginLoader\Plugin\PluginBase;
+use Skintrphoenix\PluginLoader\Web\Web;
 
 class PluginLoader implements PluginIds{
 
@@ -17,6 +18,7 @@ class PluginLoader implements PluginIds{
             @mkdir($this->base_folder);
         }
         $this->loadPlugins();
+        $web = new Web();
     }
 
     public function loadPlugin($path):void{
