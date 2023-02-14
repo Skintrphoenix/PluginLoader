@@ -14,6 +14,11 @@ $plugin = new \Skintrphoenix\PluginLoader\PluginLoader();
 $plugin->refreshPlugin();
 ```
 
+Run this code on your terminal
+```bash
+php artisan storage:link
+```
+
 ### Configuration (Optional)
 
 Add This code to \App\Providers\AppServiceProvider on method boot
