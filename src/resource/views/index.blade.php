@@ -25,7 +25,7 @@
                             <div class="row">
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4">
                                     <img src="{{ asset('storage/' . $plugin->plugin->name . '.png') }}" style="max-width: 90px; max-height: 90px;" alt="...">
-                                    <small>{{ $plugin->plugin->author }}</small>
+                                    <br><small>{{ $plugin->plugin->author }}</small>
                                 </div>
                                 <div class="col-xl-8 col-lg-4 col-md-8 col-sm-8 col-8">
                                     <h3>{{ $plugin->plugin->name }} <span class="h4">v{{ $plugin->plugin->version }}</span></h3>
