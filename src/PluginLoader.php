@@ -25,7 +25,6 @@ class PluginLoader implements PluginIds{
         }
         $web = new Web();
         $db = new Database();
-        $this->refreshPlugin();
     }
 
     public function loadPlugin($name):void{
