@@ -17,7 +17,6 @@ class PluginLoader implements PluginIds{
         if(!is_dir($this->base_folder)){
             @mkdir($this->base_folder);
         }
-        $this->loadPlugins();
         $web = new Web();
     }
 
