@@ -3,14 +3,19 @@
 namespace Skintrphoenix\PluginLoader;
 
 use Illuminate\Support\Facades\Log;
+use PDO;
+use Skintrphoenix\PluginLoader\Database\Database;
+use Skintrphoenix\PluginLoader\Models\Plugin;
 use Skintrphoenix\PluginLoader\Plugin\PluginBase;
 use Skintrphoenix\PluginLoader\Web\Web;
 
 class PluginLoader implements PluginIds{
 
-    private $base_folder;
+    public $base_folder;
 
     private $plugins = [];
+
+    private $cache = [];
 
     public function __construct(){
         $this->base_folder = base_path(self::FOLDER) . '/';
@@ -18,25 +23,70 @@ class PluginLoader implements PluginIds{
             @mkdir($this->base_folder);
         }
         $web = new Web();
+        $db = new Database();
+        $this->refreshPlugin();
     }
 
-    public function loadPlugin($path):void{
-        if($this->canloadplugin($path)){
-            $plugin = json_decode(file_get_contents($path . '/' . self::PLUGIN));
-            $class = $this->validateClass($path, $plugin->main);
-            $link = base_path('public/storage') . '/'  . $plugin->name . '.png';
-            if(is_link($link)){
-                unlink($link);
+    public function loadPlugin($name):void{
+        $data = scandir($this->base_folder);
+        for($i = 2; $i < count($data); $i++){
+            $item = $data[$i];
+            try {
+                $path = $this->base_folder . $item;
+                if($this->canloadplugin($path)){
+                    $plugin = json_decode(file_get_contents($path . '/' . self::PLUGIN));
+                    if($name == $plugin->name){
+                        $class = $this->validateClass($path, $plugin->main, $name);
+                        $link = base_path('public/storage') . '/'  . $plugin->name . '.png';
+                        if(is_link($link)){
+                            unlink($link);
+                        }
+                        $target = $path . '/icon.png';
+                        if(!is_file($target)){
+                            $target = base_path('public/resources/' . self::FOLDER . '/img/icon.png');
+                        }
+                        symlink($target, $link);
+                        if(!is_null($class)){
+                            $class->plugin = $plugin;
+                            $this->plugins[$plugin->name] = $class;
+                            if(is_null(Plugin::where('name', $name)->first())){
+                                $plugins = new Plugin();
+                                $plugins->create(['name' => $plugin->name]);
+                            }
+                        }
+                        
+                    }
+                }
+            } catch (\Throwable $th) {
+                //throw $th;
+                Log::error($th->getMessage());
             }
-            $target = $path . '/icon.png';
-            if(!is_file($target)){
-                $target = base_path('public/resources/' . self::FOLDER . '/img/icon.png');
+        }
+    }
+
+    public function unload(string $name):void{
+        $data = scandir($this->base_folder);
+        for($i = 2; $i < count($data); $i++){
+            $item = $data[$i];
+            try {
+                $path = $this->base_folder . $item;
+                $plugin = json_decode(file_get_contents($path . '/' . self::PLUGIN));
+                $plugins = Plugin::where('name', $name)->first();
+                unset($this->plugins[$name]);
+                unset($this->cache[$name]);
+                if(!is_null($plugins)){
+                    $plugins->delete();
+                }
+            } catch (\Throwable $th) {
+                //throw $th;
+                Log::error($th->getMessage());
             }
-            symlink($target, $link);
-            if(!is_null($class)){
-                $class->plugin = $plugin;
-                $this->plugins[$plugin->name] = $class;
-            }
+        }
+    }
+
+    public function refreshPlugin(){
+        foreach($this->cache as $item){
+            $item->register();
         }
     }
 
@@ -46,7 +96,8 @@ class PluginLoader implements PluginIds{
             $item = $data[$i];
             try {
                 $path = $this->base_folder . $item;
-                $this->loadPlugin($path);
+                $plugin = json_decode(file_get_contents($path . '/' . self::PLUGIN));
+                $this->loadPlugin($plugin->name);
             } catch (\Throwable $th) {
                 //throw $th;
                 Log::error($th->getMessage());
@@ -62,12 +113,25 @@ class PluginLoader implements PluginIds{
         return is_dir($path) and file_exists($path . "/" . self::PLUGIN) and file_exists($path . "/src/");
     }
 
-    public function validateClass(string $path,string $main):?PluginBase{
+    public function validateClass(string $path,string $main, string $name):?PluginBase{
         $class_file = $path . "/src/" . $main;
         $class_file = str_replace('\\', '/', $class_file);
-        spl_autoload_register(function($class_name) use($class_file, $main){
+        spl_autoload_register(function($class_name) use($class_file, $main, $name){
             if(!class_exists($main)){
-                include $class_file . '.php';
+                $this->cache[$name] = new class{
+
+                    private $class_file = '';
+
+                    public function register(string $class_file = null)
+                    {
+                        if(!is_null($class_file)){
+                            $this->class_file = $class_file;
+                        }
+                        require_once($this->class_file . '.php');
+
+                    }
+                };
+                $this->cache[$name]->register($class_file);
             }
         });
         $class = new $main();

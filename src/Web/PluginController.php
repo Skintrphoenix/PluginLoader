@@ -4,6 +4,7 @@ namespace Skintrphoenix\PluginLoader\Web;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Skintrphoenix\PluginLoader\Plugin\PluginGet;
 use Skintrphoenix\PluginLoader\PluginIds;
 use Skintrphoenix\PluginLoader\PluginLoader;
 
@@ -16,7 +17,7 @@ class PluginController extends Controller implements PluginIds
      */
     public function index()
     {
-        $plugin = new PluginLoader();
+        $plugin = new PluginGet();
         $plugins = $plugin->getAllPlugins();
         return view(self::FOLDER . '.index', compact('plugins'));
     }
@@ -71,9 +72,16 @@ class PluginController extends Controller implements PluginIds
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $plugin = new PluginLoader();
+        if($request->type == 'load'){
+            $plugin->loadPlugin($request->name);   
+            return 'success.load';
+        }else{
+            $plugin->unload($request->name);
+            return 'success.unload';
+        }
     }
 
     /**

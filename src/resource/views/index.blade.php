@@ -32,7 +32,7 @@
                                     <p>{{ $plugin->plugin->description }}</p>
                                     <p class="text-end">
                                         <label class="switch">
-                                            <input type="checkbox" name="plugin[{{ $plugin->plugin->name }}]">
+                                            <input type="checkbox" name="plugin[]" class="plugin" value="{{ $plugin->plugin->name }}" {{ (is_null(\Skintrphoenix\PluginLoader\Models\Plugin::where('name', $plugin->plugin->name)->first())) ? '' : 'checked'}}>
                                             <span class="slider"></span>
                                         </label>
                                     </p>
@@ -57,5 +57,28 @@
       </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+          $('.plugin').change(function(){
+            const val = this.value;
+            const type = $(this).prop('checked') ? 'load' : 'unload';
+            console.log(this);
+            $.ajax({
+              url: '{{ route('plugins.update', 'plugin') }}',
+              data:{
+                'name': val,
+                'token': '{{ csrf_token() }}',
+                type: type
+              },
+              type: 'PUT',
+              success: function(data){
+                console.log('berhasil update');
+                console.log(data);
+              }
+            });
+          })
+        })
+    </script>
   </body>
 </html>
