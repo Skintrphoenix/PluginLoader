@@ -2,6 +2,7 @@
 
 namespace Skintrphoenix\PluginLoader;
 
+use Closure;
 use Illuminate\Support\Facades\Log;
 use PDO;
 use Skintrphoenix\PluginLoader\Database\Database;
@@ -85,8 +86,8 @@ class PluginLoader implements PluginIds{
     }
 
     public function refreshPlugin(){
-        foreach($this->cache as $item){
-            $item->register();
+        foreach(Plugin::all() as $name){
+            $this->loadPlugin($name->name);
         }
     }
 
@@ -118,20 +119,7 @@ class PluginLoader implements PluginIds{
         $class_file = str_replace('\\', '/', $class_file);
         spl_autoload_register(function($class_name) use($class_file, $main, $name){
             if(!class_exists($main)){
-                $this->cache[$name] = new class{
-
-                    private $class_file = '';
-
-                    public function register(string $class_file = null)
-                    {
-                        if(!is_null($class_file)){
-                            $this->class_file = $class_file;
-                        }
-                        require_once($this->class_file . '.php');
-
-                    }
-                };
-                $this->cache[$name]->register($class_file);
+                include $class_file . '.php';
             }
         });
         $class = new $main();
