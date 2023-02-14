@@ -11,7 +11,7 @@ composer require skintrphoenix/plugin-loader
 
 Add This code to \App\Providers\AppServiceProvider on method boot
 (this for auto load plugins on laravel is start)
-```bash
+```php
 $plugin = new \Skintrphoenix\PluginLoader\PluginLoader();
 $plugin->loadPlugins();
 ```
