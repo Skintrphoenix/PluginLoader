@@ -18,20 +18,21 @@
       <main class="mt-5 p-3">
         <section class="container-fluid">
             <div class="row justify-content-center col-12 col-xl-12 col-md-12 col-sm-12 gap-3 mb-4 mx-auto">
+                @foreach ($plugins as $plugin)
                 <div class="row justify-content-center col-12 col-xl-3 ">
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4">
-                                    <img src="asset/img/sidiq.jpeg" style="max-width: 100%;" alt="...">
+                                    <img src="{{ asset('storage/' . $plugin->plugin->name . '.png') }}" style="max-width: 90px; max-height: 90px;" alt="...">
+                                    <small>{{ $plugin->plugin->author }}</small>
                                 </div>
                                 <div class="col-xl-8 col-lg-4 col-md-8 col-sm-8 col-8">
-                                    <h3>Class Editor</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum possimus incidunt laborum dolor veritatis modi! Quis velit debitis vero cumque.</p>
-                                    <p>By <em class="text-primary">Lorem ipsum dolor sit amet.</em></p>
+                                    <h3>{{ $plugin->plugin->name }} <span class="h4">v{{ $plugin->plugin->version }}</span></h3>
+                                    <p>{{ $plugin->plugin->description }}</p>
                                     <p class="text-end">
                                         <label class="switch">
-                                            <input type="checkbox">
+                                            <input type="checkbox" name="plugin[{{ $plugin->plugin->name }}]">
                                             <span class="slider"></span>
                                         </label>
                                     </p>
@@ -40,248 +41,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="row justify-content-center col-12 col-xl-3 ">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4">
-                                    <img src="asset/img/sidiq.jpeg" style="max-width: 100%;" alt="...">
-                                </div>
-                                <div class="col-xl-8 col-lg-4 col-md-8 col-sm-8 col-8">
-                                    <h3>Class Editor</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum possimus incidunt laborum dolor veritatis modi! Quis velit debitis vero cumque.</p>
-                                    <p>By <em class="text-primary">Lorem ipsum dolor sit amet.</em></p>
-                                    <p class="text-end">
-                                        <label class="switch">
-                                            <input type="checkbox">
-                                            <span class="slider"></span>
-                                        </label>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row justify-content-center col-12 col-xl-3 ">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4">
-                                    <img src="asset/img/sidiq.jpeg" style="max-width: 100%;" alt="...">
-                                </div>
-                                <div class="col-xl-8 col-lg-4 col-md-8 col-sm-8 col-8">
-                                    <h3>Class Editor</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum possimus incidunt laborum dolor veritatis modi! Quis velit debitis vero cumque.</p>
-                                    <p>By <em class="text-primary">Lorem ipsum dolor sit amet.</em></p>
-                                    <p class="text-end">
-                                        <label class="switch">
-                                            <input type="checkbox">
-                                            <span class="slider"></span>
-                                        </label>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row justify-content-center col-12 col-xl-3 ">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4">
-                                    <img src="asset/img/sidiq.jpeg" style="max-width: 100%;" alt="...">
-                                </div>
-                                <div class="col-xl-8 col-lg-4 col-md-8 col-sm-8 col-8">
-                                    <h3>Class Editor</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum possimus incidunt laborum dolor veritatis modi! Quis velit debitis vero cumque.</p>
-                                    <p>By <em class="text-primary">Lorem ipsum dolor sit amet.</em></p>
-                                    <p class="text-end">
-                                        <label class="switch">
-                                            <input type="checkbox">
-                                            <span class="slider"></span>
-                                        </label>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row justify-content-center col-12 col-xl-3 ">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4">
-                                    <img src="asset/img/sidiq.jpeg" style="max-width: 100%;" alt="...">
-                                </div>
-                                <div class="col-xl-8 col-lg-4 col-md-8 col-sm-8 col-8">
-                                    <h3>Class Editor</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum possimus incidunt laborum dolor veritatis modi! Quis velit debitis vero cumque.</p>
-                                    <p>By <em class="text-primary">Lorem ipsum dolor sit amet.</em></p>
-                                    <p class="text-end">
-                                        <label class="switch">
-                                            <input type="checkbox">
-                                            <span class="slider"></span>
-                                        </label>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row justify-content-center col-12 col-xl-3 ">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4">
-                                    <img src="asset/img/sidiq.jpeg" style="max-width: 100%;" alt="...">
-                                </div>
-                                <div class="col-xl-8 col-lg-4 col-md-8 col-sm-8 col-8">
-                                    <h3>Class Editor</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum possimus incidunt laborum dolor veritatis modi! Quis velit debitis vero cumque.</p>
-                                    <p>By <em class="text-primary">Lorem ipsum dolor sit amet.</em></p>
-                                    <p class="text-end">
-                                        <label class="switch">
-                                            <input type="checkbox">
-                                            <span class="slider"></span>
-                                        </label>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row justify-content-center col-12 col-xl-3 ">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4">
-                                    <img src="asset/img/sidiq.jpeg" style="max-width: 100%;" alt="...">
-                                </div>
-                                <div class="col-xl-8 col-lg-4 col-md-8 col-sm-8 col-8">
-                                    <h3>Class Editor</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum possimus incidunt laborum dolor veritatis modi! Quis velit debitis vero cumque.</p>
-                                    <p>By <em class="text-primary">Lorem ipsum dolor sit amet.</em></p>
-                                    <p class="text-end">
-                                        <label class="switch">
-                                            <input type="checkbox">
-                                            <span class="slider"></span>
-                                        </label>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row justify-content-center col-12 col-xl-3 ">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4">
-                                    <img src="asset/img/sidiq.jpeg" style="max-width: 100%;" alt="...">
-                                </div>
-                                <div class="col-xl-8 col-lg-4 col-md-8 col-sm-8 col-8">
-                                    <h3>Class Editor</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum possimus incidunt laborum dolor veritatis modi! Quis velit debitis vero cumque.</p>
-                                    <p>By <em class="text-primary">Lorem ipsum dolor sit amet.</em></p>
-                                    <p class="text-end">
-                                        <label class="switch">
-                                            <input type="checkbox">
-                                            <span class="slider"></span>
-                                        </label>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row justify-content-center col-12 col-xl-3 ">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4">
-                                    <img src="asset/img/sidiq.jpeg" style="max-width: 100%;" alt="...">
-                                </div>
-                                <div class="col-xl-8 col-lg-4 col-md-8 col-sm-8 col-8">
-                                    <h3>Class Editor</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum possimus incidunt laborum dolor veritatis modi! Quis velit debitis vero cumque.</p>
-                                    <p>By <em class="text-primary">Lorem ipsum dolor sit amet.</em></p>
-                                    <p class="text-end">
-                                        <label class="switch">
-                                            <input type="checkbox">
-                                            <span class="slider"></span>
-                                        </label>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row justify-content-center col-12 col-xl-3 ">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4">
-                                    <img src="asset/img/sidiq.jpeg" style="max-width: 100%;" alt="...">
-                                </div>
-                                <div class="col-xl-8 col-lg-4 col-md-8 col-sm-8 col-8">
-                                    <h3>Class Editor</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum possimus incidunt laborum dolor veritatis modi! Quis velit debitis vero cumque.</p>
-                                    <p>By <em class="text-primary">Lorem ipsum dolor sit amet.</em></p>
-                                    <p class="text-end">
-                                        <label class="switch">
-                                            <input type="checkbox">
-                                            <span class="slider"></span>
-                                        </label>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row justify-content-center col-12 col-xl-3 ">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4">
-                                    <img src="asset/img/sidiq.jpeg" style="max-width: 100%;" alt="...">
-                                </div>
-                                <div class="col-xl-8 col-lg-4 col-md-8 col-sm-8 col-8">
-                                    <h3>Class Editor</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum possimus incidunt laborum dolor veritatis modi! Quis velit debitis vero cumque.</p>
-                                    <p>By <em class="text-primary">Lorem ipsum dolor sit amet.</em></p>
-                                    <p class="text-end">
-                                        <label class="switch">
-                                            <input type="checkbox">
-                                            <span class="slider"></span>
-                                        </label>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row justify-content-center col-12 col-xl-3 ">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4">
-                                    <img src="asset/img/sidiq.jpeg" style="max-width: 100%;" alt="...">
-                                </div>
-                                <div class="col-xl-8 col-lg-4 col-md-8 col-sm-8 col-8">
-                                    <h3>Class Editor</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum possimus incidunt laborum dolor veritatis modi! Quis velit debitis vero cumque.</p>
-                                    <p>By <em class="text-primary">Lorem ipsum dolor sit amet.</em></p>
-                                    <p class="text-end">
-                                        <label class="switch">
-                                            <input type="checkbox">
-                                            <span class="slider"></span>
-                                        </label>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
+                
             </div>
         </section>
       </main>

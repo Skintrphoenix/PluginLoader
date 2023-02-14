@@ -25,7 +25,17 @@ class PluginLoader implements PluginIds{
         if($this->canloadplugin($path)){
             $plugin = json_decode(file_get_contents($path . '/' . self::PLUGIN));
             $class = $this->validateClass($path, $plugin->main);
+            $link = base_path('public/storage') . '/'  . $plugin->name . '.png';
+            if(is_link($link)){
+                unlink($link);
+            }
+            $target = $path . '/icon.png';
+            if(!is_file($target)){
+                $target = base_path('public/resources/' . self::FOLDER . '/img/icon.png');
+            }
+            symlink($target, $link);
             if(!is_null($class)){
+                $class->plugin = $plugin;
                 $this->plugins[$plugin->name] = $class;
             }
         }
