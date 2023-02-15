@@ -19,7 +19,7 @@
         <section class="container-fluid">
             <div class="row justify-content-center col-12 col-xl-12 col-md-12 col-sm-12 gap-3 mb-4 mx-auto">
                 @foreach ($plugins as $plugin)
-                <div class="row justify-content-center col-12 col-xl-3 ">
+                <div class="row justify-content-center col-12 col-xl-4 ">
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
