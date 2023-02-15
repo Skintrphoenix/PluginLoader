@@ -23,6 +23,11 @@ class PluginLoader implements PluginIds{
         if(!is_dir($this->base_folder)){
             @mkdir($this->base_folder);
         }
+        $file = $this->base_folder . '.gitignore';
+        if(!file_exists($file)){
+            file_put_contents($file, '*
+!.gitignore');
+        }
         $web = new Web();
         $db = new Database();
     }
