@@ -121,11 +121,8 @@ class PluginLoader implements PluginIds{
     public function validateClass(string $path,string $main, string $name):?PluginBase{
         $class_file = $path . "/src/" . $main;
         $class_file = str_replace('\\', '/', $class_file);
-        spl_autoload_register(function($class_name) use($class_file, $main, $name){
-            if(!class_exists($main)){
-                include $class_file . '.php';
-            }
-        });
+        require 'Autoload.php';
+        load($path . "/src/");
         $class = new $main();
         if($class instanceof PluginBase){
             return $class;
