@@ -31,9 +31,11 @@ abstract class PluginBase{
             $data2 = explode('/', request()->route()->uri());
             $data3 = explode('/', $data);
             $data4 = [];
-            foreach($data3 as $key => $item){
-                if(!in_array($item, $data2)){
-                    $data4[] = $item;
+            foreach($data2 as $key => $item){
+                if(str_contains($item, '{') && str_contains($item, '}')){
+                    if(isset($data3[$key])){
+                        $data4[] = $data3[$key];
+                    }
                 }
             }
 
