@@ -8,7 +8,7 @@ composer require skintrphoenix/plugin-loader
 ```
 ### Configuration
 
-Add This code to \App\Providers\AppServiceProvider on method boot
+Add This code to routes/web.php
 ```php
 $plugin = new \Skintrphoenix\PluginLoader\PluginLoader();
 $plugin->refreshPlugin();
@@ -17,15 +17,6 @@ $plugin->refreshPlugin();
 Run this code on your terminal
 ```bash
 php artisan storage:link
-```
-
-### Configuration (Optional)
-
-Add This code to \App\Providers\AppServiceProvider on method boot
-(this for auto load all plugins on laravel is start)
-```php
-$plugin = new \Skintrphoenix\PluginLoader\PluginLoader();
-$plugin->loadPlugins();
 ```
 
 ## Example Plugin
