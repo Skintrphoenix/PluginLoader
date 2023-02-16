@@ -13,11 +13,13 @@ abstract class Controller extends ControllersController{
 
     private $plugin;
 
+    private $middleware = [];
+
     public function __construct(string $name, PluginBase $plugin, array $middleware = [])
     {
         $this->name = $name;
         $this->plugin = $plugin;
-        $this->middleware($middleware);
+        $this->middleware = $middleware;
     }
 
     abstract public function controller(Request $request, array $args);
@@ -28,5 +30,10 @@ abstract class Controller extends ControllersController{
 
     public function getPlugin() : PluginBase{
         return $this->plugin;
+    }
+
+    public function getMiddleware()
+    {
+        return $this->middleware;
     }
 }
