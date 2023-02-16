@@ -9,6 +9,8 @@ abstract class PluginBase{
 
     public $plugin;
 
+    public $data_folder;
+
     public function __construct()
     {
         $this->onLoad();
@@ -44,5 +46,9 @@ abstract class PluginBase{
             })->name($controller->getRouteName());
         });
         return true;
+    }
+
+    public function getDataFolder():? string{
+        return $this->data_folder;
     }
 }

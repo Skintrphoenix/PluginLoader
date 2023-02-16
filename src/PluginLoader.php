@@ -53,6 +53,14 @@ class PluginLoader implements PluginIds{
                         symlink($target, $link);
                         if(!is_null($class)){
                             $class->plugin = $plugin;
+                            $class->data_folder = $this->base_folder . self::DATA_FOLDER . '/' . $plugin->name;
+                            if(!is_dir($class->data_folder)){
+                                @mkdir($class->data_folder);
+                            }
+
+                            require 'function.php';
+                            custom_copy($path . '/' . 'resources', $class->data_folder);
+
                             $this->plugins[$plugin->name] = $class;
                             if(is_null(Plugin::where('name', $name)->first())){
                                 $plugins = new Plugin();

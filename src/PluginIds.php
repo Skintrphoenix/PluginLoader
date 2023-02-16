@@ -9,4 +9,6 @@ interface PluginIds{
     const FOLDER = 'plugins';
 
     const LINK_RESOURCE = 'resources/plugins/';
+
+    const DATA_FOLDER = 'plugin_data';
 }
