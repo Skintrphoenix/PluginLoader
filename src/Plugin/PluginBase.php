@@ -25,7 +25,7 @@ abstract class PluginBase{
     public function register_route(Controller $controller):bool{
         $class = $controller;
         Route::middleware($controller->getMiddleware())->group(function() use($class, $controller){
-            Route::any($controller->getName(), function() use($class){
+            Route::any($controller->getUrlName(), function() use($class){
                 $class2 = $class;
     
                 $data = str_replace(request()->root() . '/', '', url()->current());
@@ -41,7 +41,7 @@ abstract class PluginBase{
                 }
     
                 return $class2->controller(request(), $data4);
-            });
+            })->name($controller->getRouteName());
         });
         return true;
     }
