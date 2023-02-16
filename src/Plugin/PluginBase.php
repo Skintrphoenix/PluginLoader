@@ -24,22 +24,24 @@ abstract class PluginBase{
 
     public function register_route(Controller $controller):bool{
         $class = $controller;
-        Route::any($controller->getName(), function() use($class){
-            $class2 = $class;
-
-            $data = str_replace(request()->root() . '/', '', url()->current());
-            $data2 = explode('/', request()->route()->uri());
-            $data3 = explode('/', $data);
-            $data4 = [];
-            foreach($data2 as $key => $item){
-                if(str_contains($item, '{') && str_contains($item, '}')){
-                    if(isset($data3[$key])){
-                        $data4[] = $data3[$key];
+        Route::middleware($controller->getMiddleware())->group(function() use($class, $controller){
+            Route::any($controller->getName(), function() use($class){
+                $class2 = $class;
+    
+                $data = str_replace(request()->root() . '/', '', url()->current());
+                $data2 = explode('/', request()->route()->uri());
+                $data3 = explode('/', $data);
+                $data4 = [];
+                foreach($data2 as $key => $item){
+                    if(str_contains($item, '{') && str_contains($item, '}')){
+                        if(isset($data3[$key])){
+                            $data4[] = $data3[$key];
+                        }
                     }
                 }
-            }
-
-            return $class2->controller(request(), $data4);
+    
+                return $class2->controller(request(), $data4);
+            });
         });
         return true;
     }
