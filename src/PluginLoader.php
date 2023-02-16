@@ -10,6 +10,17 @@ use Skintrphoenix\PluginLoader\Models\Plugin;
 use Skintrphoenix\PluginLoader\Plugin\PluginBase;
 use Skintrphoenix\PluginLoader\Web\Web;
 
+spl_autoload_register(function($class_name){
+    require 'Autoload.php';
+    $data2 = explode('\\', $class_name);
+    $data = rsearch(base_path('plugins/'),'/.*\/'. $data2[count($data2) - 1] . '.php/');
+    foreach($data as $item){
+        if(!class_exists($class_name)){
+            require $item;
+        }
+    }
+});
+
 class PluginLoader implements PluginIds{
 
     public $base_folder;
@@ -129,8 +140,6 @@ class PluginLoader implements PluginIds{
     public function validateClass(string $path,string $main, string $name):?PluginBase{
         $class_file = $path . "/src/" . $main;
         $class_file = str_replace('\\', '/', $class_file);
-        require 'Autoload.php';
-        load($path . "/src/");
         $class = new $main();
         if($class instanceof PluginBase){
             return $class;
