@@ -68,7 +68,7 @@
               url: '{{ route('plugins.update', 'plugin') }}',
               data:{
                 'name': val,
-                'token': '{{ csrf_token() }}',
+                '_token': '{{ csrf_token() }}',
                 type: type
               },
               type: 'PUT',
