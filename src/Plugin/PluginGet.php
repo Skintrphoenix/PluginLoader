@@ -48,10 +48,8 @@ class PluginGet{
                 $target = base_path('public/resources/' . PluginLoader::FOLDER . '/img/icon.png');
             }
             symlink($target, $link);
-            $class = new class extends PluginBase{
-                
+            $class = new class($plugin, '') extends PluginBase{
             };
-            $class->plugin = $plugin;
             $this->plugins[$plugin->name] = $class;
         }
     }

@@ -52,7 +52,7 @@ class PluginLoader implements PluginIds{
                 if($this->canloadplugin($path)){
                     $plugin = json_decode(file_get_contents($path . '/' . self::PLUGIN));
                     if($name == $plugin->name){
-                        $class = $this->validateClass($path, $plugin->main, $name);
+                        $class = $this->validateClass($path, $plugin->main, $name, $plugin);
                         $link = base_path('public/storage') . '/'  . $plugin->name . '.png';
                         if(is_link($link)){
                             unlink($link);
@@ -63,8 +63,6 @@ class PluginLoader implements PluginIds{
                         }
                         symlink($target, $link);
                         if(!is_null($class)){
-                            $class->plugin = $plugin;
-                            $class->data_folder = $this->base_folder . self::DATA_FOLDER . '/' . $plugin->name;
                             if(!is_dir($class->data_folder)){
                                 @mkdir($class->data_folder);
                             }
@@ -137,10 +135,10 @@ class PluginLoader implements PluginIds{
         return is_dir($path) and file_exists($path . "/" . self::PLUGIN) and file_exists($path . "/src/");
     }
 
-    public function validateClass(string $path,string $main, string $name):?PluginBase{
+    public function validateClass(string $path,string $main, string $name, $plugin):?PluginBase{
         $class_file = $path . "/src/" . $main;
         $class_file = str_replace('\\', '/', $class_file);
-        $class = new $main();
+        $class = new $main($plugin, $this->base_folder . self::DATA_FOLDER . '/' . $plugin->name);
         if($class instanceof PluginBase){
             return $class;
         }

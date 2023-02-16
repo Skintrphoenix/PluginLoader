@@ -24,15 +24,15 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4">
-                                    <img src="{{ asset('storage/' . $plugin->plugin->name . '.png') }}" style="max-width: 90px; max-height: 90px;" alt="...">
-                                    <br><small>{{ $plugin->plugin->author }}</small>
+                                    <img src="{{ asset('storage/' . $plugin->getPluginFile()->name . '.png') }}" style="max-width: 90px; max-height: 90px;" alt="...">
+                                    <br><small>{{ $plugin->getPluginFile()->author }}</small>
                                 </div>
                                 <div class="col-xl-8 col-lg-4 col-md-8 col-sm-8 col-8">
-                                    <h3>{{ $plugin->plugin->name }} <span class="h4">v{{ $plugin->plugin->version }}</span></h3>
-                                    <p>{{ $plugin->plugin->description }}</p>
+                                    <h3>{{ $plugin->getPluginFile()->name }} <span class="h4">v{{ $plugin->getPluginFile()->version }}</span></h3>
+                                    <p>{{ $plugin->getPluginFile()->description }}</p>
                                     <p class="text-end">
                                         <label class="switch">
-                                            <input type="checkbox" name="plugin[]" class="plugin" value="{{ $plugin->plugin->name }}" {{ (is_null(\Skintrphoenix\PluginLoader\Models\Plugin::where('name', $plugin->plugin->name)->first())) ? '' : 'checked'}}>
+                                            <input type="checkbox" name="plugin[]" class="plugin" value="{{ $plugin->getPluginFile()->name }}" {{ (is_null(\Skintrphoenix\PluginLoader\Models\Plugin::where('name', $plugin->getPluginFile()->name)->first())) ? '' : 'checked'}}>
                                             <span class="slider"></span>
                                         </label>
                                     </p>

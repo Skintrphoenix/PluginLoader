@@ -4,15 +4,16 @@ namespace Skintrphoenix\PluginLoader\Plugin;
 
 use Illuminate\Support\Facades\Route;
 use Skintrphoenix\PluginLoader\Controller\Controller;
+use stdClass;
 
 abstract class PluginBase{
 
-    public $plugin;
+    private $plugin, $data_folder;
 
-    public $data_folder;
-
-    public function __construct()
+    public function __construct(stdClass $plugin, string $data_folder)
     {
+        $this->plugin = $plugin;
+        $this->data_folder = $data_folder;
         $this->onLoad();
     }
 
@@ -20,7 +21,7 @@ abstract class PluginBase{
 
     }
 
-    public function getPluginFile():string{
+    public function getPluginFile():stdClass{
         return $this->plugin;
     }
 
