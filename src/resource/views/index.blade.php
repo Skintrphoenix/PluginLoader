@@ -24,7 +24,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4">
-                                    <img src="{{ asset('storage/' . $plugin->getPluginFile()->name . '.png') }}" style="max-width: 90px; max-height: 90px;" alt="...">
+                                    <img src="{{ asset('storage/'. \Skintrphoenix\PluginLoader\PluginIds::FOLDER . '/' . $plugin->getPluginFile()->name . '.png') }}" style="max-width: 90px; max-height: 90px;" alt="...">
                                     <br><small>{{ $plugin->getPluginFile()->author }}</small>
                                 </div>
                                 <div class="col-xl-8 col-lg-4 col-md-8 col-sm-8 col-8">
