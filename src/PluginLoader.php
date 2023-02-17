@@ -54,6 +54,7 @@ class PluginLoader implements PluginIds{
                     $plugin = json_decode(file_get_contents($path . '/' . self::PLUGIN));
                     if($name == $plugin->name){
                         $class = $this->validateClass($path, $plugin->main, $name, $plugin);
+                        @mkdir(base_path('public/storage') . '/' . self::FOLDER);
                         $link = base_path('public/storage') . '/' . self::FOLDER . '/'  . $plugin->name . '.png';
                         if(is_link($link)){
                             unlink($link);
