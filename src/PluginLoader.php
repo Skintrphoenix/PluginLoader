@@ -34,6 +34,7 @@ class PluginLoader implements PluginIds{
         if(!is_dir($this->base_folder)){
             @mkdir($this->base_folder);
         }
+        @mkdir($this->base_folder . self::DATA_FOLDER);
         $file = $this->base_folder . '.gitignore';
         if(!file_exists($file)){
             file_put_contents($file, '*
@@ -63,12 +64,12 @@ class PluginLoader implements PluginIds{
                         }
                         symlink($target, $link);
                         if(!is_null($class)){
-                            if(!is_dir($class->data_folder)){
-                                @mkdir($class->data_folder);
+                            if(!is_dir($class->getDataFolder())){
+                                mkdir($class->getDataFolder());
                             }
 
                             require 'function.php';
-                            custom_copy($path . '/' . 'resources', $class->data_folder);
+                            custom_copy($path . '/' . 'resources', $class->getDataFolder());
 
                             $this->plugins[$plugin->name] = $class;
                             if(is_null(Plugin::where('name', $name)->first())){
