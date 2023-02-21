@@ -39,7 +39,7 @@ class PluginGet{
     public function loadPlugin($path){
         if($this->main->canloadplugin($path)){
             $plugin = json_decode(file_get_contents($path . '/' . PluginLoader::PLUGIN));
-            $link = base_path('public/storage') . '/'  . $plugin->name . '.png';
+            $link = base_path('public/storage') . '/' . PluginLoader::FOLDER . '/'  . $plugin->name . '.png';
             if(is_link($link)){
                 unlink($link);
             }
