@@ -16,7 +16,7 @@ spl_autoload_register(function($class_name){
     $data = rsearch(base_path('plugins/'),'/.*\/'. $data2[count($data2) - 1] . '.php/');
     foreach($data as $item){
         if(!class_exists($class_name)){
-            require $item;
+            require_once $item;
         }
     }
 });
